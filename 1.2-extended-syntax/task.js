@@ -21,27 +21,27 @@ function getResult(a,b,c){
   return x;
 }
 
-function getAverageMark(marks) {
-	let averageMark = 0,
-      marks2; 
 
-	if (marks.length == 0) {
-	 	return 0;
-	}else if (marks.length > 5) {
-		console.log('Оценок больше 5!'); 
+function getAverageMark(marks) {
+  let averageMark = 0,
+     
+  if (marks.length == 0) {
+    return 0;
+  }else if (marks.length > 5) {
+    console.log('Оценок больше 5!'); 
     marks.splice(5);
-	} 
+  } 
     
   for (let i = 0; i < marks.length; i++) {
     averageMark += marks[i];  
   }
   
   return averageMark/marks.length;
-
 }
 
+
 function askDrink(name,dateOfBirthday){
-	let age = new Date().getFullYear() - dateOfBirthday.getFullYear(); 
+  let age = new Date().getFullYear() - dateOfBirthday.getFullYear(); 
 	
   if (age > 18) {
     return `Не желаете ли олд-фэшн, ${name}?`;
