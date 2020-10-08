@@ -1,51 +1,31 @@
-"use strict";
+'use strict'; 
 
-function getResult(a,b,c){
-  
-  let x = [ ],
-      x1,
-      x2; 
-  let result = (b**2) - (4*a*c);
-  
-  
-  if (result > 0) {
-    x1 = (-b - Math.sqrt(result)) / (2 * a);
-    x2 = (-b + Math.sqrt(result)) / (2 * a);
-    x = [x2,x1];
+function calculateTotalMortgage(percent, contribution, amount, date) {
+    let totalAmount = 0; 
+    const percentChecked = parseInt(percent);
+    const contributionChecked = parseInt(contribution);
+    const amountChecked = parseInt(amount);
 
-  }else if (result == 0) {
-    x1 = -b / (2*a);
-    x = [x1]; 
-  }
-
-  return x;
+    if (isNaN(percentChecked) === true || isNaN(contributionChecked) === true || isNaN(amountChecked) === true) {
+    	return "Параметр содержит неправильное значение"    	
+    }else {
+    	
+    	const sum = amountChecked - contributionChecked;
+    	const percentPart = 1/12 * (percentChecked/100);  
+    	
+		const current_date = new Date();
+		const difference = (date.getFullYear()*12 + date.getMonth()) - (current_date.getFullYear()*12 + current_date.getMonth());	
+		const monthPay = sum * (percentPart + (percentPart/(((1+percentPart)**difference)-1)));
+		totalAmount = difference * monthPay;
+		console.log(parseFloat(totalAmount.toFixed(2)));
+    }
+    return parseFloat(totalAmount.toFixed(2));
 }
 
-function getAverageMark(marks) {
-	let averageMark = 0,
-      marks2; 
-
-	if (marks.length == 0) {
-	 	return 0;
-	}else if (marks.length > 5) {
-		console.log('Оценок больше 5!'); 
-    marks.splice(5);
-	} 
-    
-  for (let i = 0; i < marks.length; i++) {
-    averageMark += marks[i];  
-  }
-  
-  return averageMark/marks.length;
-
-}
-
-function askDrink(name,dateOfBirthday){
-	let age = new Date().getFullYear() - dateOfBirthday.getFullYear(); 
-	
-  if (age > 18) {
-    return `Не желаете ли олд-фэшн, ${name}?`;
-  }else {
-    return `Сожалею, ${name}, но я не могу вам продать алкоголь. Зато могу предложить вам замечательный клюквенный компот!`;
-  }
+function getGreeting(name) {
+    let greeting;
+    let nameChecked = Boolean(name);
+    greeting = "Привет, мир! Меня зовут " + (nameChecked ? name : "Аноним");
+   
+    return greeting; 
 }
