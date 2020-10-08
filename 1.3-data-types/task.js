@@ -1,4 +1,4 @@
-'Use strict'; 
+'use strict'; 
 
 function calculateTotalMortgage(percent, contribution, amount, date) {
     if ((percent || contribution || amount || date) !== 'number' && (percent || contribution || amount || date) !== 'string') {
