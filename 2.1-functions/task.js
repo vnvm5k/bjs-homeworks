@@ -54,14 +54,14 @@ function getAverageScore(data) {
     i += 1;
     if (i < 10) {
       let value = getAverageMark(data[prop]);
-      data[prop] = value;
-      sum += value;
-      let average1 = sum / i;
-      data.average = average1;  
+      data[prop] = value; 
     } else {
       delete data[prop];
       }
   }
+  let average1 = Object.values(data);
+  let averageSum = getAverageMark(average1);
+  data.average = averageSum;  
   return data;
 }
 
@@ -71,20 +71,13 @@ function getAverageScore(data) {
 
 function getDecodedValue(secret) {
   
-  return (secret >= 0) ? 'Эмильо' : 'Родриго'; 
+  return (secret <= 0) ? 'Эмильо' : 'Родриго'; 
 }
 
 
 
 function getPersonData(secretData) {
-  /*let value = getDecodedValue(secretData.aaa);
-  secretData.aaa = value;
-  secretData.firstname = secretData.aaa;
-  value = getDecodedValue(secretData.bbb);
-  secretData.bbb = value; 
-  secretData.secondname = secretData.bbb;
-     delete secretData.aaa;
-     delete secretData.bbb;*/
+
   let i = 0; 
   for (let prop in secretData) {
     let value = getDecodedValue(secretData[prop]); 
