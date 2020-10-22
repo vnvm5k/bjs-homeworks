@@ -1,10 +1,10 @@
 
 String.prototype.isPalindrome = function () {
 	
-	let init = this.split(' ').join('').toLowerCase(); 
-	let rev = init.split('').reverse().join(''); 
+    let init = this.split(' ').join('').toLowerCase();
+    let rev = init.split('').reverse().join(''); 
 
-	return (rev === init) ? true : false; 
+    return (rev === init) ? true : false; 
 } 
 
 
