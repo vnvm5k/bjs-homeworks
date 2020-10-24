@@ -1,6 +1,11 @@
 //Задача 1
 
 class PrintEditionItem {
+	name;
+	releaseDate;
+	pagesCount;
+	state;
+	type;
 	constructor(name, releaseDate, pagesCount) {
 		this.name = name;
 		this.releaseDate = releaseDate;
@@ -13,19 +18,19 @@ class PrintEditionItem {
 		this.state *= 1.5; 
 	}
 
-	set stateCheck (state) {
+	set state(state) {
 
 		if (state < 0) {
-			this.state = 0;
+			this._state = 0;
 		} else if (state >= 100) {
-			this.state = 100; 
+			this._state = 100; 
 		} else {
-			this.state = state; 
+			this._state = state; 
 		}
 	}
 
-	get stateCheck () {
-		return this.state;
+	get state() {
+		return this._state;
 	}
 }
 
@@ -70,21 +75,24 @@ class DetectiveBook extends Book {
 //Задача 2 
 
 class Library {
+	name;
+	books; 
 	constructor(name) {
 		this.name = name;
 		this.books = []; 
 	}
 
 	addBook(book) {
-		if (this.state > 30) {
+		if(PrintEditionItem.state > 30) {
 			this.books.push(book);
-		}
+    }
+		
 	}
 
 	findBookBy(type, value) {
 		for (let i = 0; i < this.books.length; i++) {
-			if(this.books[i].type === value) {
-				return books[i]; 
+			if (this.books[i][type] === value) {
+				return this.books[i]; 
 			} else {
 				return null; 
 			}
@@ -93,9 +101,9 @@ class Library {
 
 	giveBookByName(bookName) {
 		for (let i = 0; i < this.books.length; i++) {
-			if(this.books[i].name === bookName) {
+			if (this.books[i].name === bookName) {
 				delete this.books[i];
-				return books[i]; 
+				return this.books[i]; 
 			} else {
 				return null; 
 			}
