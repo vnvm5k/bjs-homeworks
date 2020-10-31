@@ -19,28 +19,28 @@ function memorize(fn, limit) {
 	return function fn2(...args) {
 //Поиск совпадений
     
-    	let search = memory.find(element => compareArrays(element.args, args));
+    		let search = memory.find(element => compareArrays(element.args, args));
 //Проверка на совпадение	
   		if(search) {
   			return search.result;
   		} else {
 //Создаем массив memory
 	 
-	    	let result1 = fn(...args);
-	    	let argument = args;
-	    	let obj = {};
-	    	obj['args'] = argument;
-	    	obj['result'] = result1; 
-	    	memory.push(obj);
+	    		let result1 = fn(...args);
+	    		let argument = args;
+	    		let obj = {};
+	    		obj['args'] = argument;
+	    		obj['result'] = result1; 
+	    		memory.push(obj);
 	   
 //Проверка на длину массива 	    
-	    	if(memory.length > limit) {
-	    		memory.shift();
-	    }
-	    console.log(memory); 
-	    return result1;
+	    		if(memory.length > limit) {
+	    			memory.shift();
+	    		}
+	    	console.log(memory); 
+	    	return result1;
+  		}
   	}
-  }
 }
 
 const mSum = memorize(sum, 5); 
