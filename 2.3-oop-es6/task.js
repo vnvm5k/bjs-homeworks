@@ -1,11 +1,6 @@
 //Задача 1
 
 class PrintEditionItem {
-	name;
-	releaseDate;
-	pagesCount;
-	state;
-	type;
 	constructor(name, releaseDate, pagesCount) {
 		this.name = name;
 		this.releaseDate = releaseDate;
@@ -83,7 +78,7 @@ class Library {
 	}
 
 	addBook(book) {
-		if(PrintEditionItem.state > 30) {
+		if(book.state > 30) {
 			this.books.push(book);
     }
 		
@@ -93,78 +88,62 @@ class Library {
 		for (let i = 0; i < this.books.length; i++) {
 			if (this.books[i][type] === value) {
 				return this.books[i]; 
-			} else {
-				return null; 
-			}
+			} 
 		}
+		return null;
 	}
 
 	giveBookByName(bookName) {
 		for (let i = 0; i < this.books.length; i++) {
 			if (this.books[i].name === bookName) {
-				delete this.books[i];
-				return this.books[i]; 
-			} else {
-				return null; 
-			}
+				this.books.splice(i,1);
+				return this.books; 
+			} 
 		}
+		return null;
 	}
 }
 
 //Задача 3 
 
-class PrintEditionItem {
+class StudentLog {
 	constructor(studentName) {
 		this.studentName = studentName;
+		this.sbjList = {}; 
 	}
 
 	getName(){
-		return studentName; 
+		return this.studentName; 
 	}
 
-	addGrade(grade, subject) { 
-		let sbjList = {};
-		let grades = []; 
-		let subject = subject; 
-		if ((grade >= 1 && grade <= 5) && indexOf(grade) === 'number') {
-			grades.push(grade);
-			sbjList.subject = grades; 
+	addGrade(grade, subject) {  
+		let length = 0;
+		if ((grade >= 1 && grade <= 5) && typeof(grade) === 'number') {
+			this.sbjList[subject] = [];
+			this.sbjList[subject].push(grade); 
+			length = this.sbjList[subject].length;
 		} else {
-			console.log(`Вы пытались поставить оценку ${grade}! по предмету ${subject}. Допускаются только числа от 1 до 5.`)
+			throw new Error(`Вы пытались поставить оценку ${grade}! по предмету ${subject}. Допускаются только числа от 1 до 5. \n ${length}`)
 		}
-		return sbjList[subject].length; 
+		console.log(this.sbjList);
+		return this.sbjList[subject].length; 
 	}
 
 	getAverageBysubject(subject) {
-		
+		let sbjGrades = this.sbjList.subject; 
 
-		for (let prop in this.sbjList) {
-			
-			let value = function getAverageMark(sbjList[prop]) {
+		function getAverageMark(marks) {
 				
 				let averageMark = 0;
-				if (this.sbjList[prop].length == 0) {
+				if (marks.length == 0) {
 					return 0;
 				}
-
-				for (let i = 0; i < this.sbjList[prop].length; i++) {
-					averageMark += this.sbjList[prop][i];
+				for (let i = 0; i < marks.length; i++) {
+					averageMark += marks[i];
 				}
-				return averageMark/this.sbjList[prop].length;
-			}
-			this.sbjList[prop] = value;
+				return averageMark/marks.length;
 		}
-		let sbjNames = Object.keys(this.sbjList);
-		
-		for (let i = 0; i < this.sbjNames.length; i++) {
-			
-			if (subject == this.sbjNames[i]){
-				return sbjList.['subject']; 
-			} else {
-				return 0; 
-			}
-		}
-
+		return getAverageMark(sbjGrades);
 	}
 
 	getTotalAverage() {
@@ -174,3 +153,10 @@ class PrintEditionItem {
 		return averageSum;  
 	}
 }
+
+const log = new StudentLog('Олег Никифоров');
+
+console.log(log.addGrade(3, 'algebra'));
+// 1
+console.log(log.addGrade(4, 'algebra'));
+// 1
