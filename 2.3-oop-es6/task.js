@@ -118,39 +118,44 @@ class StudentLog {
 
 	addGrade(grade, subject) {  
 		let length = 0;
+		let memory = Object.keys(this.sbjList); 
 		if ((grade >= 1 && grade <= 5) && typeof(grade) === 'number') {
-			this.sbjList[subject] = [];
-			this.sbjList[subject].push(grade); 
-			length = this.sbjList[subject].length;
+			if (memory.some(element => element == subject)) {
+				this.sbjList[subject].push(grade);
+			} else {
+				this.sbjList[subject] = [];
+				this.sbjList[subject].push(grade); 
+			}
 		} else {
+			length = this.sbjList[subject].length;
 			throw new Error(`Вы пытались поставить оценку ${grade}! по предмету ${subject}. Допускаются только числа от 1 до 5. \n ${length}`)
 		}
-		console.log(this.sbjList);
 		return this.sbjList[subject].length; 
 	}
 
-	getAverageBysubject(subject) {
-		let sbjGrades = this.sbjList.subject; 
+	getAverage(marks) {
 
-		function getAverageMark(marks) {
-				
-				let averageMark = 0;
-				if (marks.length == 0) {
-					return 0;
-				}
-				for (let i = 0; i < marks.length; i++) {
-					averageMark += marks[i];
-				}
-				return averageMark/marks.length;
+		let averageMark = 0;
+		if (marks.length == 0) {
+			return 0;
 		}
-		return getAverageMark(sbjGrades);
+		for (let i = 0; i < marks.length; i++) {
+			averageMark += marks[i];
+		}
+		return averageMark/marks.length;
+	}
+
+	getAverageBysubject(subject) {
+		
+		let sbjGrades = this.sbjList[subject]; 
+		return this.getAverage(sbjGrades);
 	}
 
 	getTotalAverage() {
 		
 		let average1 = Object.values(this.sbjList);
-		let averageSum = getAverageMark(average1);
-		return averageSum;  
+		let average2 = average1.reduce( function( a, b ) { return a.concat( b ); } );
+		return this.getAverage(average2);  
 	}
 }
 
@@ -160,3 +165,9 @@ console.log(log.addGrade(3, 'algebra'));
 // 1
 console.log(log.addGrade(4, 'algebra'));
 // 1
+console.log(log.addGrade(5, 'geometry'));
+console.log(log.addGrade(1, 'geometry'));
+
+console.log(log.getAverageBysubject('algebra'));
+console.log(log.getAverageBysubject('geometry')); // 3
+console.log(log.getTotalAverage());
