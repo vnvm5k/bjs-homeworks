@@ -96,8 +96,7 @@ class Library {
 	giveBookByName(bookName) {
 		for (let i = 0; i < this.books.length; i++) {
 			if (this.books[i].name === bookName) {
-				this.books.splice(i,1);
-				return this.books; 
+				return this.books.splice(i,1);
 			} 
 		}
 		return null;

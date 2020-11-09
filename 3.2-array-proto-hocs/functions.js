@@ -1,23 +1,23 @@
 //Task 1
 const weapons = [new Knife(), new Staff(), new Axe(), new StormStaff(), new LongBow(), new Bow()];
 
-function getNames(array) {
-	return array.map(element => element.name);
+function getNames() {
+	return weapons.map(element => element.name);
 }
 
-function getCountReliableWeapons(array,number) {
-	return array.filter(element => element.durability > number).length;
+function getCountReliableWeapons(number) {
+	return weapons.filter(element => element.durability > number).length;
 }
 
-function hasReliableWeapons(array,number) {
-	return array.some(element => element.durability > number);
+function hasReliableWeapons(number) {
+	return weapons.some(element => element.durability > number);
 }
 
-function getReliableWeaponsNames(array,number) {
-	return array.filter(element => element.durability > number).map(element => element.name);
+function getReliableWeaponsNames(number) {
+	return weapons.filter(element => element.durability > number).map(element => element.name);
 }
 
-function getTotalDamage(array) {
+function getTotalDamage() {
 	return weapons.reduce((acc, weapon) => acc + weapon.attack, 0);
 }
 

@@ -23,16 +23,14 @@ function memorize(fn, limit) {
 			return search.result;
   		} 
 
-	    let sumResult = fn(...args);
-	    let obj = {};
-	    obj['args'] = args;
-	    obj['result'] = sumResult; 
+	    let optimal = fn(...args);
+	    let obj = {args, result: optimal};
 	    memory.push(obj);
 	   	    
 	    if(memory.length > limit) {
 	    	memory.shift();
 	    } 
-	    return sumResult;
+	    return optimal;
   	}
 }
 
