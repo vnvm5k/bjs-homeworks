@@ -19,7 +19,7 @@ class AlarmClock {
 				return this.alarmCollection.push(obj);
 			}
 		} else {
-			throw new Error('error text'); 
+			throw new Error('id не найден'); 
 		}
 
 	}
@@ -27,8 +27,8 @@ class AlarmClock {
 	removeClock(timerId) {
 		let checkId = this.alarmCollection.some(element => element.timerId == timerId);
 		if(checkId) {
-			let checkDoublers = this.alarmCollection.filter(element => element.timerId == timerId).splice();
-			if (this.alarmCollection.filter(element => element.timerId == timerId).length > 1) {
+			let checkDoublers = this.alarmCollection.filter(element => element.timerId == timerId).splice(-1);
+			if (this.alarmCollection.filter(element => element.timerId == timerId).length  == 0) {
 				return true;
 			} else {
 				return false; 
@@ -41,21 +41,19 @@ class AlarmClock {
 		return date.getHours()+':'+date.getMinutes();
 	}
 	start() {
+		let checkTime = this.alarmCollection.some(element => element.time == this.getCurrentFormattedTime());
 		function checkClock(obj) {
-			let checkTime = this.alarmCollection.some(element => element.time == getCurrentFormattedTime());
 				if (checkTime) {
-
-					'какой callback?'
+					obj.callback(); 
 				}
 		}
 		
-		if ('не понятно как обратиться к текущему значению timerId') {
+		if (!this.timerId) {
 
-			let intervalID = setInterval(() => {
+			this.timerId = setInterval(() => {
 				let checkCalls = this.alarmCollection.forEach(element => checkClock(element));
 			}, 1000);
 
-			'не понятно как сохранить результат setInterval в timerId'
 		}
 
 
@@ -63,19 +61,38 @@ class AlarmClock {
 
 	stop() {
 		
-		if ('проверка существования текущего таймера') {
-			clearInterval(this.intervalID); 
-			'удалить значение timerid'
+		if (this.timerId) {
+			clearInterval(this.timerId); 
+			this.timerId.delete;  
 		}
 	}
 
 	printAlarms() {
-		return this.alarmCollection.array.forEach(element => console.log('id:' + element.timerid + 'time:' + element.time));
+		return this.alarmCollection.forEach(element => console.log(' id: ' + element.timerId + '  time: ' + element.time));
 	}
 
 	clearAlarms() {
 		this.stop();
-		this.alarmCollection.splice(-1); 
+		this.alarmCollection.splice(0, this.alarmCollection.length);
+		console.log(this.alarmCollection); 
 
 	}
+}
+
+function testcase() {
+
+	let phoneAlarm = new AlarmClock(); 
+
+	phoneAlarm.addClock("17:28",() => console.log("Пора вставать"), 1); 
+	phoneAlarm.addClock("17:29",() => {console.log("Давай, вставай уже!"); phoneAlarm.removeClock(2)}, 2); 
+	
+	phoneAlarm.addClock("17:30",() => {
+		console.log("Вставай, а то проспишь!");
+		phoneAlarm.clearAlarms();
+		phoneAlarm.printAlarms();
+	}, 3);
+	phoneAlarm.addClock("09:05",() => {console.log("Пора вставать")}, 1);  
+
+	phoneAlarm.printAlarms();
+	phoneAlarm.start();
 }
