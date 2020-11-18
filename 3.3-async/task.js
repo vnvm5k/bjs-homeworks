@@ -1,8 +1,8 @@
 class AlarmClock {
 	
-	constructor(){
+	constructor() {
 		this.alarmCollection = []; 
-		this.timerId; 
+		this.timerId = null; 
 
 	}
 
@@ -25,25 +25,23 @@ class AlarmClock {
 	}
 
 	removeClock(timerId) {
-		let checkId = this.alarmCollection.some(element => element.timerId == timerId);
-		if(checkId) {
-			let checkDoublers = this.alarmCollection.filter(element => element.timerId == timerId).splice(-1);
-			if (this.alarmCollection.filter(element => element.timerId == timerId).length  == 0) {
+		let index = this.alarmCollection.findIndex(el => el.timerId === timerId);
+		this.alarmCollection.splice(index, 1); 
+			if (index) {
 				return true;
 			} else {
 				return false; 
 			}
-		}
+		
 	}
 
 	getCurrentFormattedTime() {
 		let date = new Date();
-		return date.getHours()+':'+date.getMinutes();
+		return ("0" + date.getHours()).slice(-2)   + ":" +  ("0" + date.getMinutes()).slice(-2); 
 	}
 	start() {
-		let checkTime = this.alarmCollection.some(element => element.time == this.getCurrentFormattedTime());
-		function checkClock(obj) {
-				if (checkTime) {
+		let checkClock = (obj) => {
+				if (obj.time == this.getCurrentFormattedTime()) {
 					obj.callback(); 
 				}
 		}
@@ -51,7 +49,7 @@ class AlarmClock {
 		if (!this.timerId) {
 
 			this.timerId = setInterval(() => {
-				let checkCalls = this.alarmCollection.forEach(element => checkClock(element));
+				this.alarmCollection.forEach(element => checkClock(element)); 
 			}, 1000);
 
 		}
@@ -63,7 +61,7 @@ class AlarmClock {
 		
 		if (this.timerId) {
 			clearInterval(this.timerId); 
-			this.timerId.delete;  
+			this.timerId = null;  
 		}
 	}
 
@@ -74,7 +72,6 @@ class AlarmClock {
 	clearAlarms() {
 		this.stop();
 		this.alarmCollection.splice(0, this.alarmCollection.length);
-		console.log(this.alarmCollection); 
 
 	}
 }
@@ -83,10 +80,10 @@ function testcase() {
 
 	let phoneAlarm = new AlarmClock(); 
 
-	phoneAlarm.addClock("17:28",() => console.log("Пора вставать"), 1); 
-	phoneAlarm.addClock("17:29",() => {console.log("Давай, вставай уже!"); phoneAlarm.removeClock(2)}, 2); 
-	
-	phoneAlarm.addClock("17:30",() => {
+	phoneAlarm.addClock("11:32",() => console.log("Пора вставать"), 1); 
+	phoneAlarm.addClock("11:33",() => {console.log("Давай, вставай уже!",); 
+	phoneAlarm.removeClock(2)}, 2); 
+	phoneAlarm.addClock("11:34",() => {
 		console.log("Вставай, а то проспишь!");
 		phoneAlarm.clearAlarms();
 		phoneAlarm.printAlarms();
